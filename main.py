@@ -4,6 +4,14 @@ import pandas as pd
 
 r  = requests.get('https://rn.olx.com.br/imoveis/aluguel/apartamentos')
 count = 1;
+
+titulos = []
+links = []
+precos = []
+detalhes = []
+data = []
+dicionario = dict() 
+
 while r.status_code == 200:
 
 
@@ -15,12 +23,7 @@ while r.status_code == 200:
 	divs_precos = soup.findAll('div', {"class": 'col-3'})
 	descricoes = soup.findAll('p', {"class": 'text detail-specific'})
 
-	titulos = []
-	links = []
-	precos = []
-	detalhes = []
-	data = []
-	dicionario = dict()
+	
 
 	for anuncio in anuncios:
 		titulos.append(anuncio['title'])
@@ -49,7 +52,11 @@ while r.status_code == 200:
 	
 
 	count = count + 1;
-	r = requests.get('https://rn.olx.com.br/imoveis/aluguel/apartamentos?o='+str(count))
+	try:
+		r = requests.get('https://rn.olx.com.br/imoveis/aluguel/apartamentos?o='+str(count))
+	except IndexError:
+		print "Erro na requisicao"
+
 
 
 df = pd.DataFrame(data).dropna()
