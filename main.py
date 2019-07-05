@@ -55,7 +55,7 @@ while r.status_code == 200:
 	try:
 		r = requests.get('https://rn.olx.com.br/imoveis/aluguel/apartamentos?o='+str(count))
 	except IndexError:
-		print "Erro na requisicao"
+		print ("Erro na requisicao")
 
 
 
